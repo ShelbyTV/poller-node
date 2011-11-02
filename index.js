@@ -3,6 +3,13 @@ if (!process.env.NODE_ENV){
   process.exit();
 }
 
-require('beanstalk-node');
+var factory = require('factory-node');
+var super = require('./lib/poller.proto.js');
 
-module.exports = require('./lib/factory.js');
+module.exports = {
+
+  build : function(sub){
+    return factory.build(super, sub);
+  }
+
+};

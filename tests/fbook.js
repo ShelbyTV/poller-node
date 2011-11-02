@@ -1,5 +1,4 @@
 var poller_factory = require('../index.js');
-var bs_factory = require('beanstalk-node');
 
 var sub = {
 
@@ -7,25 +6,25 @@ var sub = {
 
   dao : require('redis-daos').build('facebook-poller'),
 
-  newJob : function(job, delJob){
-    console.log('new job called', job);
-    delJob();
+  newJob : function(){
+    console.log('got new job');
   },
 
-  bsOpts : {
-    "reserve_tube" : 'fb_add_user',
-    "put_tube" : 'link_processing_high',
-    "log_output" : true,
-    "json_encoding" :true,
-    "pool_size" : 50
+  poll : function(uid){
+    console.log('polling for '+uid);
   }
 
 };
 
 var opts = {
-  set : ['1319125', '132222'],
-  poll : true,
-  freq : 5000,
+  users : ['1319125', '132222'],
+  do_polling : true,
+  freq : 5000, //every five seconds
+  beanstalk_opts : {
+    resTube : 'fb_add_user',
+    putTube : 'link_processing',
+    pool_size : 200
+  }
 };
 
 var fb_poller = poller_factory.build(sub);
