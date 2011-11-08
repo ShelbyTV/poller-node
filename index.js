@@ -4,12 +4,12 @@ if (!process.env.NODE_ENV){
 }
 
 var factory = require('factory-node');
-var super = require('./lib/poller.proto.js');
+var _super = require('./lib/poller.proto.js');
 
 module.exports = {
 
   build : function(sub){
-    return factory.build(super, sub);
+    return factory.build(_super, sub);
   }
 
 };
